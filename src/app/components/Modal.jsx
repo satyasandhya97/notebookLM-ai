@@ -1,18 +1,22 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
 
-export default function Modal({ open, onClose, title, children }) {
+export default function Modal({ open, onClose, children }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     const onEsc = (e) => e.key === "Escape" && onClose?.();
     if (open) document.addEventListener("keydown", onEsc);
     return () => document.removeEventListener("keydown", onEsc);
   }, [open, onClose]);
 
-  if (typeof document === "undefined") return null;
+  if (!mounted) return null; // prevents hydration mismatch
 
   return createPortal(
     <AnimatePresence>
@@ -34,17 +38,8 @@ export default function Modal({ open, onClose, title, children }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            className="relative w-[min(92vw,700px)] rounded-2xl border border-gray-700 bg-[#181818] shadow-2xl"
+            className="relative w-[min(92vw,70%)] rounded-2xl border border-gray-700 bg-[#1a1a1a] shadow-2xl"
           >
-            <div className="flex items-center justify-between border-b border-gray-700 px-4 py-3">
-              <h4 className="text-base font-semibold">{title}</h4>
-              <button
-                onClick={onClose}
-                className="rounded-xl p-2 hover:bg-[#2a2a2a] transition"
-              >
-                <X size={18} />
-              </button>
-            </div>
             <div className="p-4">{children}</div>
           </motion.div>
         </motion.div>
