@@ -145,7 +145,6 @@ export default function UploadModalContent({
                 </p>
             )}
 
-            {/* Bottom options unchanged */}
             <div className="grid grid-cols-2 gap-4 mt-2">
                 <div className="rounded-xl bg-[#0f0f0f] p-4 flex flex-col gap-3 shadow">
                     <h4 className="text-sm font-medium text-gray-300">Link</h4>

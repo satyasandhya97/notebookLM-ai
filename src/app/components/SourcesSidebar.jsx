@@ -33,8 +33,10 @@ export default function SourcesSidebar({ sources, open, setSources }) {
 
     return (
         <aside className="w-100 border border-gray-700 bg-[#181818] rounded-2xl p-4 flex flex-col shadow-lg">
-            <h2 className="text-sm font-medium mb-4">Sources</h2>
-            <div className="flex gap-2 mb-6">
+            <div className="border-b border-gray-700 flex items-center justify-between">
+                <h2 className="text-sm font-medium mb-4">Sources</h2>
+            </div>
+            <div className="flex gap-2 mb-6 px-4 py-3 ">
                 <button
                     onClick={open}
                     className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-[#2a2a2a] hover:bg-[#333] transition"
