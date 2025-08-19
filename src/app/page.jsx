@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { Plus, Search, Upload, Settings, Share2 } from "lucide-react";
+import { Twitter, Linkedin, GitHub } from "lucide-react";
 
 import Modal from "./components/Modal";
 import useQueryModal from "./hooks/useQueryModal";
@@ -11,7 +12,6 @@ import UploadModalContent from "./components/UploadModalContent";
 
 export default function Home() {
   const [sources, setSources] = useState([]);
-
   const { isOpen, open, close } = useQueryModal("upload");
 
   const [files, setFiles] = useState([]);
@@ -29,16 +29,40 @@ export default function Home() {
     [onFiles]
   );
 
-  const removeFile = (idx) => {
+  const removeFile = useCallback((idx) => {
     setFiles((prev) => prev.filter((_, i) => i !== idx));
-  };
+  }, []);
 
-  const commitFiles = () => {
-    if (files.length) {
-      setSources((prev) => [...prev, ...files.map((f) => f.name)]);
+  const commitFiles = async () => {
+    if (!files.length) return;
+
+    try {
+      for (const f of files) {
+        const formData = new FormData();
+        formData.append("file", f);
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const errBody = await res.json().catch(() => ({ error: "unknown" }));
+          console.error("Upload failed for", f.name, errBody);
+          continue;
+        }
+
+        const json = await res.json().catch(() => ({}));
+        console.log("Upload success:", f.name, json);
+
+        setSources((prev) => [...prev, f.name]);
+      }
+
       setFiles([]);
+      close();
+    } catch (err) {
+      console.error("Error uploading files:", err);
     }
-    close();
   };
 
   const previews = useMemo(
@@ -55,24 +79,34 @@ export default function Home() {
       }),
     [files]
   );
-
   return (
     <div className="h-screen w-full bg-[#474646] text-gray-100 flex flex-col">
       {/* Top Bar */}
       <header className="flex justify-between items-center px-6 py-3 border-b border-gray-700 bg-[#1e1e1e] shadow-md">
         <h1 className="text-lg font-semibold">NotebookLM AI</h1>
         <div className="flex items-center gap-3">
-          <button className="px-3 py-1 bg-[#2a2a2a] rounded-xl flex items-center gap-2 hover:bg-[#333] transition">
-            <Share2 size={16} /> Share
-          </button>
-          <button className="px-3 py-1 bg-[#2a2a2a] rounded-xl flex items-center gap-2 hover:bg-[#333] transition">
-            <Settings size={16} /> Settings
-          </button>
+          <a
+            href="https://x.com/Satyasandhya__"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-[#2a2a2a] rounded-full hover:bg-[#333] transition"
+          >
+            <Twitter size={20} className="text-blue-300" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/satyasandhya-biswal-b48bb61b5/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-[#2a2a2a] rounded-full hover:bg-[#333] transition"
+          >
+            <Linkedin size={20} className="text-blue-300" />
+          </a>
         </div>
+
       </header>
 
       <main className="flex flex-1 gap-4 p-4">
-        <SourcesSidebar sources={sources} open={open} />
+        <SourcesSidebar sources={sources} setSources={setSources} open={open} />
         <ChatPanel open={open} />
       </main>
 

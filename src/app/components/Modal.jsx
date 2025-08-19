@@ -16,7 +16,7 @@ export default function Modal({ open, onClose, children }) {
     return () => document.removeEventListener("keydown", onEsc);
   }, [open, onClose]);
 
-  if (!mounted) return null; // prevents hydration mismatch
+  if (!mounted) return null;
 
   return createPortal(
     <AnimatePresence>

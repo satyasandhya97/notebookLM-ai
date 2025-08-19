@@ -1,9 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Plus, Search, Upload } from "lucide-react";
+import { Plus, Search, Upload, Trash2 } from "lucide-react";
+import { useState } from "react";
 
-export default function SourcesSidebar({ sources = [], open }) {
+export default function SourcesSidebar({ sources, open, setSources }) {
+    const [selected, setSelected] = useState(sources);;
+
+    // Toggle single source
+    const toggleSource = (fileName) => {
+        setSelected((prev) =>
+            prev.includes(fileName)
+                ? prev.filter((s) => s !== fileName)
+                : [...prev, fileName]
+        );
+    };
+
+    // Toggle all sources
+    const toggleAll = () => {
+        if (selected.length === sources.length) {
+            setSelected([]); // unselect all
+        } else {
+            setSelected(sources); // select all
+        }
+    };
+
+    // Remove file
+    const removeFile = (fileName) => {
+        setSources((prev) => prev.filter((s) => s !== fileName));
+        setSelected((prev) => prev.filter((s) => s !== fileName));
+    };
+
     return (
         <aside className="w-100 border border-gray-700 bg-[#181818] rounded-2xl p-4 flex flex-col shadow-lg">
             <h2 className="text-sm font-medium mb-4">Sources</h2>
@@ -33,18 +60,46 @@ export default function SourcesSidebar({ sources = [], open }) {
                     </p>
                 </motion.div>
             ) : (
-                <ul className="flex flex-col gap-2">
-                    {sources.map((src, i) => (
-                        <motion.li
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="p-2 rounded-lg bg-[#2a2a2a] hover:bg-[#333] transition shadow-sm"
-                        >
-                            {src}
-                        </motion.li>
-                    ))}
-                </ul>
+                <>
+                    {/* Select All */}
+                    <label className="flex items-center gap-2 mb-3 cursor-pointer text-sm text-gray-300">
+                        <input
+                            type="checkbox"
+                            checked={selected.length === sources.length}
+                            onChange={toggleAll}
+                            className="accent-blue-500"
+                        />
+                        Select All Sources
+                    </label>
+
+                    {/* File List */}
+                    <ul className="flex flex-col gap-2">
+                        {sources.map((src, i) => (
+                            <motion.li
+                                key={i}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="p-2 rounded-lg bg-[#2a2a2a] hover:bg-[#333] transition shadow-sm flex items-center justify-between"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={selected.includes(src)}
+                                        onChange={() => toggleSource(src)}
+                                        className="accent-blue-500"
+                                    />
+                                    <span className="truncate max-w-[140px] text-sm">{src}</span>
+                                </div>
+                                <button
+                                    onClick={() => removeFile(src)}
+                                    className="text-red-400 hover:text-red-500"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </motion.li>
+                        ))}
+                    </ul>
+                </>
             )}
         </aside>
     );
