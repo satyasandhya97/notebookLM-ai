@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Upload, Send } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
-export default function ChatPanel({ open }) {
+export default function ChatPanel({ open, selectedFile }) {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -37,7 +37,10 @@ export default function ChatPanel({ open }) {
             const res = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user_query: userMsg.content }),
+                body: JSON.stringify({
+                    user_query: userMsg.content,
+                    file_name: selectedFile?.name || null   // ✅ send file name
+                }),
             });
 
             const data = await res.json();
@@ -57,6 +60,7 @@ export default function ChatPanel({ open }) {
         }
     };
 
+
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
@@ -69,7 +73,9 @@ export default function ChatPanel({ open }) {
 
             {/* Chat Header */}
             <div className="px-4 py-3 border-b border-gray-700 bg-[#1f1f1f] flex items-center justify-between">
-                <h2 className="text-sm font-medium text-gray-100">Chat</h2>
+                <h2 className="text-sm font-medium text-gray-100">
+                    Chat {selectedFile ? `– ${selectedFile.name}` : ""}
+                </h2>
                 <button
                     onClick={open}
                     className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm transition"
@@ -77,6 +83,7 @@ export default function ChatPanel({ open }) {
                     Add Source
                 </button>
             </div>
+
 
             <div
                 ref={scrollRef}

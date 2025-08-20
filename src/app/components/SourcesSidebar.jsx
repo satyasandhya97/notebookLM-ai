@@ -2,10 +2,28 @@
 
 import { motion } from "framer-motion";
 import { Plus, Search, Upload, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function SourcesSidebar({ sources, open, setSources }) {
-    const [selected, setSelected] = useState(sources);;
+export default function SourcesSidebar({ open }) {
+    const [sources, setSources] = useState([]);
+    const [selected, setSelected] = useState([]);
+
+    // 🔹 Fetch files from backend when component mounts
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const res = await fetch("/api/files");
+                const data = await res.json();
+                if (data.files) {
+                    setSources(data.files);
+                    setSelected(data.files); // optional: select all by default
+                }
+            } catch (err) {
+                console.error("Error fetching files:", err);
+            }
+        };
+        fetchFiles();
+    }, []);
 
     const toggleSource = (fileName) => {
         setSelected((prev) =>
@@ -23,9 +41,26 @@ export default function SourcesSidebar({ sources, open, setSources }) {
         }
     };
 
-    const removeFile = (fileName) => {
-        setSources((prev) => prev.filter((s) => s !== fileName));
-        setSelected((prev) => prev.filter((s) => s !== fileName));
+    // ✅ delete file from backend + frontend
+    const removeFile = async (fileName) => {
+        try {
+            const res = await fetch("/api/deleteFile", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fileName }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setSources((prev) => prev.filter((s) => s !== fileName));
+                setSelected((prev) => prev.filter((s) => s !== fileName));
+            } else {
+                alert(data.error || "Failed to delete file");
+            }
+        } catch (err) {
+            console.error("Error deleting file:", err);
+        }
     };
 
     return (
@@ -33,7 +68,7 @@ export default function SourcesSidebar({ sources, open, setSources }) {
             <div className="border-b border-gray-700 flex items-center justify-between">
                 <h2 className="text-sm font-medium mb-4">Sources</h2>
             </div>
-            <div className="flex gap-2 mb-6 px-4 py-3 ">
+            <div className="flex gap-2 mb-6 px-4 py-3">
                 <button
                     onClick={open}
                     className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-[#2a2a2a] hover:bg-[#333] transition"
