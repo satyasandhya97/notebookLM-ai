@@ -12,7 +12,7 @@ export async function DELETE(req) {
             );
         }
 
-        const uploadsDir = path.join(process.cwd(), "uploads");
+        const uploadsDir = path.join(process.cwd(), "public", "uploads");
         const filePath = path.join(uploadsDir, fileName);
 
         if (!fs.existsSync(filePath)) {

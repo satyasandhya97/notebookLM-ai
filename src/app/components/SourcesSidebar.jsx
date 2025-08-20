@@ -51,7 +51,7 @@ export default function SourcesSidebar({ sources, fetchFiles, open }) {
             const data = await res.json();
             await fetchFiles();
             if (res.ok) {
-                setSources((prev) => prev.filter((s) => s !== fileName));
+                // setSources((prev) => prev.filter((s) => s !== fileName));
                 setSelected((prev) => prev.filter((s) => s !== fileName));
             } else {
                 alert(data.error || "Failed to delete file");

@@ -1,18 +1,20 @@
+import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
-import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const uploadDir = path.join(process.cwd(), "uploads");
+        const uploadDir = path.join(process.cwd(), "public", "uploads");
 
+        // Ensure uploads folder exists
         await fs.mkdir(uploadDir, { recursive: true });
 
+        // List files
         const files = await fs.readdir(uploadDir);
 
-        return NextResponse.json({ files }, { status: 200 });
-    } catch (error) {
-        console.error("Error reading uploads folder:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ files });
+    } catch (err) {
+        console.error("Error listing files:", err);
+        return NextResponse.json({ error: "Failed to fetch files" }, { status: 500 });
     }
 }

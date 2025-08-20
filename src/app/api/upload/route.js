@@ -7,7 +7,6 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
-
 export async function POST(req) {
     try {
         const formData = await req.formData();
@@ -18,7 +17,7 @@ export async function POST(req) {
         }
 
         const bytes = Buffer.from(await file.arrayBuffer());
-        const uploadDir = path.join(process.cwd(), "uploads");
+        const uploadDir = path.join(process.cwd(), "public", "uploads");
         await fs.mkdir(uploadDir, { recursive: true });
         const filePath = path.join(uploadDir, file.name);
         await fs.writeFile(filePath, bytes);
@@ -53,7 +52,11 @@ export async function POST(req) {
         });
 
         return NextResponse.json(
-            { message: `${file.name} uploaded and indexed successfully!`, chunks: docs.length },
+            {
+                message: `${file.name} uploaded and indexed successfully!`,
+                url: `/uploads/${file.name}`,
+                chunks: docs.length,
+            },
             { status: 200 }
         );
     } catch (error) {
