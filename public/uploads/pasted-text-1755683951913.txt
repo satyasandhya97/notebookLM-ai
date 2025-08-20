@@ -1,3 +1,0 @@
-React Lifecycle
-Last Updated : 04 Aug, 2025
-In React, the lifecycle refers to the various stages a component goes through. These stages allow developers to run specific code at key moments, such as when the component is created, updated, or removed. By understanding the React lifecycle, you can better manage resources, side effects, and performance. These phases allow you to run specific code at key moments in a component's life, such as when it’s created, updated, or removed from the screen.

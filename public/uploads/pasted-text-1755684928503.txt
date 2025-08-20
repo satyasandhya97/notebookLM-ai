@@ -1,6 +1,0 @@
-1. Virtual DOM
-React uses a Virtual DOM to optimize UI rendering. Instead of updating the entire real DOM directly, React:
-
-Creates a lightweight copy of the DOM (Virtual DOM).
-Compares it with the previous version to detect changes (diffing).
-Updates only the changed parts in the actual DOM (reconciliation), improving performance.
