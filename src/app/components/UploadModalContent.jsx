@@ -94,7 +94,7 @@ export default function UploadModalContent({
                                 </label>{" "}
                                 to upload
                             </p>
-                            <p className="text-xs text-gray-500">Supported: PDF</p>
+                            <p className="text-xs text-gray-500">Supported: PDF , CSV</p>
                         </div>
                     </div>
 
@@ -158,7 +158,7 @@ export default function UploadModalContent({
                     )}
 
                     <div className="grid grid-cols-2 gap-4 mt-2">
-                        <div className="rounded-xl bg-[#0f0f0f] p-4 flex flex-col gap-3 shadow">
+                        {/* <div className="rounded-xl bg-[#0f0f0f] p-4 flex flex-col gap-3 shadow">
                             <h4 className="text-sm font-medium text-gray-300">Link</h4>
                             <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#2a2a2a] hover:bg-[#333] text-sm shadow">
                                 <Link size={16} /> Website
@@ -166,7 +166,7 @@ export default function UploadModalContent({
                             <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#2a2a2a] hover:bg-[#333] text-sm shadow">
                                 <Link size={16} /> YouTube
                             </button>
-                        </div>
+                        </div> */}
 
                         <div className="rounded-xl bg-[#0f0f0f] p-4 flex flex-col gap-3 shadow">
                             <h4 className="text-sm font-medium text-gray-300">Paste text</h4>

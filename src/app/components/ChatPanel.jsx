@@ -39,7 +39,7 @@ export default function ChatPanel({ open, selectedFile }) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     user_query: userMsg.content,
-                    file_name: selectedFile?.name || null   // ✅ send file name
+                    file_name: selectedFile ? selectedFile.name : "ALL_FILES"
                 }),
             });
 

@@ -1,0 +1,6 @@
+React Tutorial
+Last Updated : 07 Aug, 2025
+React is a powerful JavaScript library for building fast, scalable front-end applications. Created by Facebook, it's known for its component-based structure, single-page applications (SPAs), and virtual DOM,enabling efficient UI updates and a seamless user experience.
+React Tutorial
+Last Updated : 07 Aug, 2025
+React is a powerful JavaScript library for building fast, scalable front-end applications. Created by Facebook, it's known for its component-based structure, single-page applications (SPAs), and virtual DOM,enabling efficient UI updates and a seamless user experience.

@@ -6,7 +6,7 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req) {
     try {
-        const { user_query, fileName } = await req.json();
+        const { user_query, file_name } = await req.json();
 
         if (!user_query) {
             return new Response(
@@ -25,9 +25,17 @@ export async function POST(req) {
             }
         );
 
-        const retriever = vectorstore.asRetriever({
-            filter: fileName ? { must: [{ key: "source", match: { value: fileName } }] } : undefined,
-        });
+        let retriever;
+
+        if (file_name && file_name !== "ALL_FILES") {
+            retriever = vectorstore.asRetriever({
+                filter: {
+                    must: [{ key: "source", match: { value: file_name } }],
+                },
+            });
+        } else {
+            retriever = vectorstore.asRetriever();
+        }
 
         const relevantDocs = await retriever.invoke(user_query);
 
@@ -47,7 +55,11 @@ export async function POST(req) {
         });
 
         const reply = response.choices[0].message.content;
-        return new Response(JSON.stringify({ reply, docs: relevantDocs }), { status: 200 });
+
+        return new Response(
+            JSON.stringify({ reply, docs: relevantDocs }),
+            { status: 200 }
+        );
     } catch (err) {
         console.error(err);
         return new Response(JSON.stringify({ error: err.message }), {

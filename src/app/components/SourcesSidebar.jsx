@@ -8,20 +8,19 @@ export default function SourcesSidebar({ open }) {
     const [sources, setSources] = useState([]);
     const [selected, setSelected] = useState([]);
 
-    // 🔹 Fetch files from backend when component mounts
-    useEffect(() => {
-        const fetchFiles = async () => {
-            try {
-                const res = await fetch("/api/files");
-                const data = await res.json();
-                if (data.files) {
-                    setSources(data.files);
-                    setSelected(data.files); // optional: select all by default
-                }
-            } catch (err) {
-                console.error("Error fetching files:", err);
+    const fetchFiles = async () => {
+        try {
+            const res = await fetch("/api/files");
+            const data = await res.json();
+            if (data.files) {
+                setSources(data.files);
+                setSelected(data.files);
             }
-        };
+        } catch (err) {
+            console.error("Error fetching files:", err);
+        }
+    };
+    useEffect(() => {
         fetchFiles();
     }, []);
 
@@ -41,7 +40,6 @@ export default function SourcesSidebar({ open }) {
         }
     };
 
-    // ✅ delete file from backend + frontend
     const removeFile = async (fileName) => {
         try {
             const res = await fetch("/api/deleteFile", {
