@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@browserbasehq/stagehand": "^1.14.0",
     "@langchain/community": "^0.3.52",
     "@langchain/core": "^0.3.72",
     "@langchain/openai": "^0.6.9",
