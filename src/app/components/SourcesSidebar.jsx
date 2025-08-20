@@ -7,7 +7,6 @@ import { useState } from "react";
 export default function SourcesSidebar({ sources, open, setSources }) {
     const [selected, setSelected] = useState(sources);;
 
-    // Toggle single source
     const toggleSource = (fileName) => {
         setSelected((prev) =>
             prev.includes(fileName)
@@ -16,16 +15,14 @@ export default function SourcesSidebar({ sources, open, setSources }) {
         );
     };
 
-    // Toggle all sources
     const toggleAll = () => {
         if (selected.length === sources.length) {
-            setSelected([]); // unselect all
+            setSelected([]);
         } else {
-            setSelected(sources); // select all
+            setSelected(sources);
         }
     };
 
-    // Remove file
     const removeFile = (fileName) => {
         setSources((prev) => prev.filter((s) => s !== fileName));
         setSelected((prev) => prev.filter((s) => s !== fileName));
@@ -63,7 +60,6 @@ export default function SourcesSidebar({ sources, open, setSources }) {
                 </motion.div>
             ) : (
                 <>
-                    {/* Select All */}
                     <label className="flex items-center gap-2 mb-3 cursor-pointer text-sm text-gray-300">
                         <input
                             type="checkbox"
@@ -74,7 +70,6 @@ export default function SourcesSidebar({ sources, open, setSources }) {
                         Select All Sources
                     </label>
 
-                    {/* File List */}
                     <ul className="flex flex-col gap-2">
                         {sources.map((src, i) => (
                             <motion.li

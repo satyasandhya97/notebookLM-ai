@@ -1,8 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { Plus, Search, Upload, Settings, Share2 } from "lucide-react";
-import { Twitter, Linkedin, GitHub } from "lucide-react";
+import { Twitter, Linkedin } from "lucide-react";
 
 import Modal from "./components/Modal";
 import useQueryModal from "./hooks/useQueryModal";

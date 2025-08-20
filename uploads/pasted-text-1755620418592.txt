@@ -1,0 +1,10 @@
+JavaScript Details
+ Introduction
+ JavaScript is a versatile, high-level programming language primarily used for adding interactivity
+ and functionality to websites. It is one of the core technologies of the web, alongside HTML and
+ CSS.
+ Key Features
+ • Interpreted, lightweight, and flexible
+ • Event-driven and asynchronous programming
+ • Supports object-oriented, functional, and imperative styles
+ • Runs on browsers and servers (Node.js

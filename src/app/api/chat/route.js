@@ -26,7 +26,6 @@ export async function POST(req) {
 
         const retriever = vectorstore.asRetriever();
         const relevantDocs = await retriever.invoke(user_query);
-        console.log("--", relevantDocs)
         const system_prompt = `
       You are an AI assistant who helps resolve user queries based on the content available to you from  files.
       Only answer based on the available content from the files.
@@ -42,7 +41,6 @@ export async function POST(req) {
         });
 
         const reply = response.choices[0].message.content;
-        console.log("00,", reply)
         return new Response(JSON.stringify({ reply }), { status: 200 });
     } catch (err) {
         console.error(err);
