@@ -17,14 +17,12 @@ export async function POST(req) {
             return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
         }
 
-        // Save uploaded file
         const bytes = Buffer.from(await file.arrayBuffer());
         const uploadDir = path.join(process.cwd(), "uploads");
         await fs.mkdir(uploadDir, { recursive: true });
         const filePath = path.join(uploadDir, file.name);
         await fs.writeFile(filePath, bytes);
 
-        // Detect file extension
         const ext = path.extname(file.name).toLowerCase();
         let loader;
 
@@ -41,16 +39,13 @@ export async function POST(req) {
             );
         }
 
-        // Load documents
         const docs = await loader.load();
 
-        // Generate embeddings
         const embeddings = new OpenAIEmbeddings({
             openAIApiKey: process.env.OPENAI_API_KEY,
             model: "text-embedding-3-large",
         });
 
-        // Store in Qdrant
         await QdrantVectorStore.fromDocuments(docs, embeddings, {
             url: process.env.QDRANT_URL || "http://localhost:6333",
             collectionName: "langchainjs-testing",

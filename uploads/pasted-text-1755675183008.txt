@@ -1,7 +1,0 @@
-Advantages of React
-Composable: React allows building reusable components, improving code organization and maintainability.
-Declarative: React’s declarative approach makes it easy to design interactive UIs by changing component states, with React handling the DOM updates.
-SEO-Friendly: React’s Single Page Application (SPA) setup can be optimized for SEO by rendering and indexing content properly.
-Large Community: React has a strong community and is widely used by major companies like Meta, Netflix, making it easier to find resources and support.
-Easy to Learn: React uses JSX, which resembles HTML, making it simple for developers with basic knowledge of HTML, CSS, and JavaScript.
-Easy Debugging: React’s unidirectional data flow simplifies debugging by ensuring that data moves in a clear, predictable direction within components.

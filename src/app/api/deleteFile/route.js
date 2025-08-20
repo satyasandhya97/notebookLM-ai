@@ -1,10 +1,9 @@
-// src/app/api/deleteFile/route.js
 import fs from "fs";
 import path from "path";
 
 export async function DELETE(req) {
     try {
-        const { fileName } = await req.json(); // ✅ parse JSON from body
+        const { fileName } = await req.json();
 
         if (!fileName) {
             return new Response(
@@ -23,7 +22,7 @@ export async function DELETE(req) {
             );
         }
 
-        fs.unlinkSync(filePath); // delete file
+        fs.unlinkSync(filePath);
 
         return new Response(
             JSON.stringify({ message: "File deleted successfully", fileName }),

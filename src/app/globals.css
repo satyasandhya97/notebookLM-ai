@@ -18,3 +18,31 @@
 .dot:nth-child(3) {
   animation-delay: 0.4s;
 }
+
+
+
+
+
+
+::-webkit-scrollbar {
+  width: 8px;             
+  height: 8px;            
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;    
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a90e2;    
+  border-radius: 10px;    
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #357ab7;    
+}
+
+* {
+  scrollbar-width: thin;               
+  scrollbar-color: #4a90e2 #1e1e1e;    
+}

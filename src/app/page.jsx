@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import { Twitter, Linkedin } from "lucide-react";
 
 import Modal from "./components/Modal";
@@ -14,6 +14,22 @@ export default function Home() {
   const { isOpen, open, close } = useQueryModal("upload");
 
   const [files, setFiles] = useState([]);
+
+  const fetchFiles = async () => {
+    try {
+      const res = await fetch("/api/files");
+      const data = await res.json();
+      if (data.files) {
+        setSources(data.files);
+      }
+    } catch (err) {
+      console.error("Error fetching files:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchFiles();
+  }, []);
 
   const onFiles = useCallback((list) => {
     const arr = Array.from(list || []);
@@ -58,7 +74,9 @@ export default function Home() {
       }
 
       setFiles([]);
+      await fetchFiles();
       close();
+
     } catch (err) {
       console.error("Error uploading files:", err);
     }
@@ -79,7 +97,7 @@ export default function Home() {
     [files]
   );
   return (
-    <div className="h-screen w-full bg-[#474646] text-gray-100 flex flex-col">
+    <div className="h-screen w-full bg-[#474646] text-gray-100 flex flex-col overflow-hidden">
       {/* Top Bar */}
       <header className="flex justify-between items-center px-6 py-3 border-b border-gray-700 bg-[#1e1e1e] shadow-md">
         <h1 className="text-lg font-semibold">NotebookLM AI</h1>
@@ -104,8 +122,8 @@ export default function Home() {
 
       </header>
 
-      <main className="flex flex-1 gap-4 p-4">
-        <SourcesSidebar sources={sources} setSources={setSources} open={open} />
+      <main className="h-full max-h-[90vh]  flex gap-4 p-8">
+        <SourcesSidebar sources={sources} fetchFiles={fetchFiles} open={open} />
         <ChatPanel open={open} />
       </main>
 

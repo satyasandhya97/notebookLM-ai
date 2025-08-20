@@ -10,7 +10,6 @@ export default function FilePreviewItem({ p, i, removeFile }) {
     >
       <div className="h-10 w-10 rounded-lg overflow-hidden flex items-center justify-center border border-gray-700">
         {p.isImage && p.url ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img src={p.url} alt={p.name} className="h-full w-full object-cover" />
         ) : (
           <FileText size={18} className="text-gray-400" />

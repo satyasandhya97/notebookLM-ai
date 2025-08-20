@@ -69,7 +69,7 @@ export default function ChatPanel({ open, selectedFile }) {
     };
 
     return (
-        <section className="flex-1 bg-[#181818] rounded-2xl flex flex-col relative shadow-xl overflow-hidden">
+        <section className="flex-1   bg-[#181818] rounded-2xl flex flex-col relative shadow-xl overflow-hidden">
 
             {/* Chat Header */}
             <div className="px-4 py-3 border-b border-gray-700 bg-[#1f1f1f] flex items-center justify-between">
@@ -129,7 +129,7 @@ export default function ChatPanel({ open, selectedFile }) {
             </div>
 
             {/* Input box */}
-            <div className="px-4 pb-4">
+            <div className="px-4 pb-4 sticky bottom-0 left-1/2 ">
                 <div className="flex items-center gap-2 rounded-full border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-md px-4 py-2">
                     <textarea
                         ref={textareaRef}

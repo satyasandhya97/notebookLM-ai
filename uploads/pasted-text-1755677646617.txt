@@ -1,0 +1,10 @@
+React Components
+Last Updated : 11 Aug, 2025
+In React, components are reusable, independent code blocks (A function or a class) that define the structure and behavior of the UI. They accept inputs (props or properties) and return elements that describe what should appear on the screen.
+
+Key Concepts of React Components:
+
+Each component handles its own logic and UI rendering.
+Components can be reused throughout the app for consistency.
+Components accept inputs via props and manage dynamic data using state.
+Only the changed component re-renders, not the entire page.

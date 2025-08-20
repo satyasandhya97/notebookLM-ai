@@ -4,25 +4,25 @@ import { motion } from "framer-motion";
 import { Plus, Search, Upload, Trash2 } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export default function SourcesSidebar({ open }) {
-    const [sources, setSources] = useState([]);
+export default function SourcesSidebar({ sources, fetchFiles, open }) {
+    // const [sources, setSources] = useState([]);
     const [selected, setSelected] = useState([]);
 
-    const fetchFiles = async () => {
-        try {
-            const res = await fetch("/api/files");
-            const data = await res.json();
-            if (data.files) {
-                setSources(data.files);
-                setSelected(data.files);
-            }
-        } catch (err) {
-            console.error("Error fetching files:", err);
-        }
-    };
-    useEffect(() => {
-        fetchFiles();
-    }, []);
+    // const fetchFiles = async () => {
+    //     try {
+    //         const res = await fetch("/api/files");
+    //         const data = await res.json();
+    //         if (data.files) {
+    //             setSources(data.files);
+    //             setSelected(data.files);
+    //         }
+    //     } catch (err) {
+    //         console.error("Error fetching files:", err);
+    //     }
+    // };
+    // useEffect(() => {
+    //     fetchFiles();
+    // }, []);
 
     const toggleSource = (fileName) => {
         setSelected((prev) =>
@@ -49,7 +49,7 @@ export default function SourcesSidebar({ open }) {
             });
 
             const data = await res.json();
-
+            await fetchFiles();
             if (res.ok) {
                 setSources((prev) => prev.filter((s) => s !== fileName));
                 setSelected((prev) => prev.filter((s) => s !== fileName));
@@ -62,7 +62,7 @@ export default function SourcesSidebar({ open }) {
     };
 
     return (
-        <aside className="w-100 border border-gray-700 bg-[#181818] rounded-2xl p-4 flex flex-col shadow-lg">
+        <aside className="w-100  h-full  overflow-y-auto  border border-gray-700 bg-[#181818] rounded-2xl p-4 flex flex-col shadow-lg">
             <div className="border-b border-gray-700 flex items-center justify-between">
                 <h2 className="text-sm font-medium mb-4">Sources</h2>
             </div>
