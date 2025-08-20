@@ -3,33 +3,22 @@
 This is a Next.js 13+ project bootstrapped with create-next-app
 .
 
-🌐 Live Demo: https://your-app-name.vercel.app
-
 📦 Getting Started
 
 First, install dependencies:
 
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
-
 
 Then run the development server:
 
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-
 
 Open http://localhost:3000
+and 
+OPENAI_API_KEY= "your api key"
+and
+QDRANT_URL=http://localhost:6333/
+
  with your browser to see the result.
 The page auto-updates as you edit files.
 
@@ -47,10 +36,9 @@ src/
 ⚡ Built with Next.js
  13+ (App Router)
 
-🎨 Optimized fonts using next/font (Geist by Vercel)
+# Please check it on the local system. It is not deployed on any server right now due to deployment issues.
 
 📂 Modular file structure for scalability
 
 🔧 API routes with server components
 
-🚀 Deployed seamlessly on Vercel
