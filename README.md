@@ -8,21 +8,15 @@ This is a Next.js 13+ project bootstrapped with create-next-app
 First, install dependencies:
 
 npm install
-yarn install
-pnpm install
-bun install
-
 
 Then run the development server:
 
 npm run dev
-yarn dev
-pnpm dev
-bun dev
-
 
 Open http://localhost:3000
 and 
+OPENAI_API_KEY= "your api key"
+and
 QDRANT_URL=http://localhost:6333/
 
  with your browser to see the result.
@@ -41,7 +35,6 @@ src/
 
 ⚡ Built with Next.js
  13+ (App Router)
-
 
 📂 Modular file structure for scalability
 
