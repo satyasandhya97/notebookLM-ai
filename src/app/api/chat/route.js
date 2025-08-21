@@ -18,7 +18,7 @@ export async function POST(req) {
         }
         const qdrantClient = new QdrantClient({
             url: process.env.QDRANT_URL ||
-                "https://fc945ef7-d03a-4eb5-823c-45dd43612cca.us-east4-0.gcp.cloud.qdrant.io:6333",
+                "https://fc945ef7-d03a-4eb5-823c-45dd43612cca.us-east4-0.gcp.cloud.qdrant.io:6333" || "http://localhost:6333/",
             apiKey: process.env.QDRANT_API_KEY,
         });
         const embedding = new OpenAIEmbeddings({ model: "text-embedding-3-large" });
