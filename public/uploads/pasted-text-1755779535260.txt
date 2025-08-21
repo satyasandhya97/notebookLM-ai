@@ -1,0 +1,2 @@
+Indexing
+Effective indexing is critical for any RAG system. The first step involves how we ingest, chunk, and store the data. Let's explore some techniques to index data into a database, focusing on various methods for chunking text and leveraging metadata.

@@ -6,6 +6,7 @@ import { QdrantVectorStore } from "@langchain/qdrant";
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { QdrantClient } from "@qdrant/js-client-rest";
 
 export async function POST(req) {
     try {
@@ -45,8 +46,14 @@ export async function POST(req) {
             model: "text-embedding-3-large",
         });
 
+        const qdrantClient = new QdrantClient({
+            url: process.env.QDRANT_URL ||
+                "https://fc945ef7-d03a-4eb5-823c-45dd43612cca.us-east4-0.gcp.cloud.qdrant.io:6333",
+            apiKey: process.env.QDRANT_API_KEY,
+        });
+
         await QdrantVectorStore.fromDocuments(docs, embeddings, {
-            url: process.env.QDRANT_URL || "http://localhost:6333",
+            client: qdrantClient,
             collectionName: "langchainjs-testing",
             metadata: { source: file.name },
         });

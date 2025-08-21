@@ -1,8 +1,10 @@
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { OpenAI } from "openai";
+import { QdrantClient } from "@qdrant/js-client-rest";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
 
 export async function POST(req) {
     try {
@@ -14,13 +16,17 @@ export async function POST(req) {
                 { status: 400 }
             );
         }
-
+        const qdrantClient = new QdrantClient({
+            url: process.env.QDRANT_URL ||
+                "https://fc945ef7-d03a-4eb5-823c-45dd43612cca.us-east4-0.gcp.cloud.qdrant.io:6333",
+            apiKey: process.env.QDRANT_API_KEY,
+        });
         const embedding = new OpenAIEmbeddings({ model: "text-embedding-3-large" });
 
         const vectorstore = await QdrantVectorStore.fromExistingCollection(
             embedding,
             {
-                url: process.env.QDRANT_URL || "http://localhost:6333",
+                client: qdrantClient,
                 collectionName: "langchainjs-testing",
             }
         );
